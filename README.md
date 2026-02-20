@@ -1,17 +1,239 @@
-Asearch – Search * { margin:0; padding:0; box-sizing:border-box; } body { font-family: Arial, Helvetica, sans-serif; background: #000000; color: #ffffff; min-height: 100vh; } .header { padding: 24px 16px 16px; text-align: center; background: #000000; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #222222; } .logo { font-size: 32px; font-weight: bold; color: #ffffff; margin-bottom: 20px; } .search-container { max-width: 600px; margin: 0 auto 24px; padding: 0 16px; } .search-form { display: flex; gap: 10px; } #query { flex: 1; padding: 14px 18px; font-size: 17px; background: #111111; color: #ffffff; border: 1px solid #333333; border-radius: 40px; outline: none; } #query:focus { border-color: #555555; } button { padding: 0 28px; font-size: 17px; background: #222222; color: #ffffff; border: none; border-radius: 40px; cursor: pointer; } button:hover { background: #333333; } #unity-banner { max-width: 600px; margin: 20px auto; padding: 12px; background: #111111; border-radius: 12px; text-align: center; color: #888888; font-size: 14px; border: 1px solid #222222; } #results { max-width: 680px; margin: 0 auto; padding: 0 16px; } .result { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid #222222; } .result-title a { color: #8ab4f8; font-size: 18px; text-decoration: none; display: block; } .result-title a:hover { text-decoration: underline; } .result-url { color: #34a853; font-size: 14px; margin: 4px 0; word-break: break-all; } .result-snippet { color: #dadce0; font-size: 15px; } #loading { text-align: center; margin: 80px 0; color: #888888; font-size: 18px; } .sponsor { margin: 60px 16px 40px; padding: 20px; background: #111111; border-radius: 12px; text-align: center; font-size: 14px; color: #bbbbbb; border: 1px solid #222222; } .sponsor a { color: #8ab4f8; text-decoration: none; } .sponsor a:hover { text-decoration: underline; } #footer { text-align: center; padding: 40px 20px; color: #666666; font-size: 13px; } 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Asearch – Search</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #000000;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+    .header {
+      padding: 24px 16px 16px;
+      text-align: center;
+      background: #000000;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid #222222;
+    }
+    .logo {
+      font-size: 32px;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+    .search-container {
+      max-width: 600px;
+      margin: 0 auto 24px;
+      padding: 0 16px;
+    }
+    .search-form {
+      display: flex;
+      gap: 10px;
+    }
+    #query {
+      flex: 1;
+      padding: 14px 18px;
+      font-size: 17px;
+      background: #111111;
+      color: #ffffff;
+      border: 1px solid #333333;
+      border-radius: 40px;
+      outline: none;
+    }
+    #query:focus {
+      border-color: #555555;
+    }
+    button {
+      padding: 0 28px;
+      font-size: 17px;
+      background: #222222;
+      color: #ffffff;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #333333;
+    }
+    #unity-banner {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 12px;
+      background: #111111;
+      border-radius: 12px;
+      text-align: center;
+      color: #888888;
+      font-size: 14px;
+      border: 1px solid #222222;
+    }
+    #results {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .result {
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #222222;
+    }
+    .result-title a {
+      color: #8ab4f8;
+      font-size: 18px;
+      text-decoration: none;
+      display: block;
+    }
+    .result-title a:hover {
+      text-decoration: underline;
+    }
+    .result-url {
+      color: #34a853;
+      font-size: 14px;
+      margin: 4px 0;
+      word-break: break-all;
+    }
+    .result-snippet {
+      color: #dadce0;
+      font-size: 15px;
+    }
+    #loading {
+      text-align: center;
+      margin: 80px 0;
+      color: #888888;
+      font-size: 18px;
+    }
+    .sponsor {
+      margin: 60px 16px 40px;
+      padding: 20px;
+      background: #111111;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 14px;
+      color: #bbbbbb;
+      border: 1px solid #222222;
+    }
+    .sponsor a {
+      color: #8ab4f8;
+      text-decoration: none;
+    }
+    .sponsor a:hover {
+      text-decoration: underline;
+    }
+    #footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666666;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
 
-Asearch
+  <div class="header">
+    <div class="logo">Asearch</div>
+  </div>
 
-Search 
+  <div class="search-container">
+    <form class="search-form" id="searchForm">
+      <input type="text" id="query" placeholder="Search..." autocomplete="off" autofocus>
+      <button type="submit">Search</button>
+    </form>
+  </div>
 
-Unity Ads Banner / MREC – Insert your Unity Ads script or placement ID here 
+  <!-- Unity Ads Banner Placeholder -->
+  <div id="unity-banner">
+    Unity Ads Banner / MREC – Insert your Unity Ads script or placement ID here
+  </div>
 
-Searching...
+  <div id="results"></div>
 
-Sponsored by UK Shoes Empire
-Quality shoes at affordable prices • Call/WhatsApp: +234 702 564 3110
-Chat now on WhatsApp 
+  <div id="loading" style="display:none;">Searching...</div>
 
-© 2026 Asearch – 100% private, no tracking 
+  <div class="sponsor">
+    <strong>Sponsored by UK Shoes Empire</strong><br>
+    Quality shoes at affordable prices • Call/WhatsApp: 
+    <a href="tel:+2347025643110">+234 702 564 3110</a><br>
+    <a href="https://wa.me/2347025643110" target="_blank">Chat now on WhatsApp</a>
+  </div>
 
-const form = document.getElementById('searchForm'); const queryInput = document.getElementById('query'); const resultsDiv = document.getElementById('results'); const loading = document.getElementById('loading'); form.addEventListener('submit', async (e) => { e.preventDefault(); const q = queryInput.value.trim(); if (!q) return; queryInput.value = ''; loading.style.display = 'block'; resultsDiv.innerHTML = ''; // Faster proxy + DuckDuckGo HTML search const ddUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(q)}`; const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(ddUrl)}`; try { const res = await fetch(proxyUrl); if (!res.ok) throw new Error('Network error'); const html = await res.text(); const parser = new DOMParser(); const doc = parser.parseFromString(html, 'text/html'); const items = doc.querySelectorAll('.result'); if (items.length === 0) { resultsDiv.innerHTML = '<p style="text-align:center; color:#888; margin:80px 0;">No results found.</p>'; } else { let content = ''; items.forEach(item => { const titleEl = item.querySelector('.result__a'); const urlEl = item.querySelector('.result__url'); const snippetEl = item.querySelector('.result__snippet'); if (!titleEl) return; const title = titleEl.textContent.trim(); const href = titleEl.href; const url = urlEl ? urlEl.textContent.trim() : new URL(href).hostname; const snippet = snippetEl ? snippetEl.textContent.trim() : ''; content += ` <div class="result"> <div class="result-title"><a href="\( {href}" target="_blank"> \){title}</a></div> <div class="result-url">${url}</div> <div class="result-snippet">${snippet}</div> </div> `; }); resultsDiv.innerHTML = content; } // Optional Unity interstitial after search if (window.UnityAds && typeof window.UnityAds.show === 'function') { window.UnityAds.show('interstitial'); } else if (window.Android && window.Android.showUnityInterstitial) { window.Android.showUnityInterstitial(); } } catch (err) { console.error('Search failed:', err); resultsDiv.innerHTML = '<p style="color:#ff6b6b; text-align:center; margin:80px 0;">Could not load results. Check internet.</p>'; } finally { loading.style.display = 'none'; } }); 
+  <div id="footer">
+    © 2026 Asearch – 100% private, no tracking
+  </div>
+
+  <script>
+    const form = document.getElementById('searchForm');
+    const queryInput = document.getElementById('query');
+    const resultsDiv = document.getElementById('results');
+    const loading = document.getElementById('loading');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const q = queryInput.value.trim();
+      if (!q) return;
+
+      queryInput.value = '';
+      loading.style.display = 'block';
+      resultsDiv.innerHTML = '';
+
+      // Faster proxy + DuckDuckGo HTML search
+      const ddUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(q)}`;
+      const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(ddUrl)}`;
+
+      try {
+        const res = await fetch(proxyUrl);
+        if (!res.ok) throw new Error('Network error');
+
+        const html = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        const items = doc.querySelectorAll('.result');
+        if (items.length === 0) {
+          resultsDiv.innerHTML = '<p style="text-align:center; color:#888; margin:80px 0;">No results found.</p>';
+        } else {
+          let content = '';
+          items.forEach(item => {
+            const titleEl = item.querySelector('.result__a');
+            const urlEl = item.querySelector('.result__url');
+            const snippetEl = item.querySelector('.result__snippet');
+
+            if (!titleEl) return;
+
+            const title = titleEl.textContent.trim();
+            const href = titleEl.href;
+            const url = urlEl ? urlEl.textContent.trim() : new URL(href).hostname;
+            const snippet = snippetEl ? snippetEl.textContent.trim() : '';
+
+            content += `
+              <div class="result">
+                <div class="result-title"><a href="\( {href}" target="_blank"> \){title}</a></div>
+                <div class="result-url">${url}</div>
+                <div class="result-snippet">${snippet}</div>
+              </div>
+            `;
+          });
+          resultsDiv.innerHTML = content;
+        }
+
+        // Optional Unity interstitial after search
+        if (window.UnityAds && typeof window.UnityAds.show === 'function') {
+          window.UnityAds.show('interstitial');
+        } else if (window.Android && window.Android.showUnityInterstitial) {
+          window.Android.showUnityInterstitial();
+        }
+
+      } catch (err) {
+        console.error('Search failed:', err);
+        resultsDiv.innerHTML = '<p style="color:#ff6b6b; text-align:center; margin:80px 0;">Could not load results. Check internet.</p>';
+      } finally {
+        loading.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
