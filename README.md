@@ -1,239 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Asearch – Search</title>
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #000000;
-      color: #ffffff;
-      min-height: 100vh;
-    }
-    .header {
-      padding: 24px 16px 16px;
-      text-align: center;
-      background: #000000;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      border-bottom: 1px solid #222222;
-    }
-    .logo {
-      font-size: 32px;
-      font-weight: bold;
-      color: #ffffff;
-      margin-bottom: 20px;
-    }
-    .search-container {
-      max-width: 600px;
-      margin: 0 auto 24px;
-      padding: 0 16px;
-    }
-    .search-form {
-      display: flex;
-      gap: 10px;
-    }
-    #query {
-      flex: 1;
-      padding: 14px 18px;
-      font-size: 17px;
-      background: #111111;
-      color: #ffffff;
-      border: 1px solid #333333;
-      border-radius: 40px;
-      outline: none;
-    }
-    #query:focus {
-      border-color: #555555;
-    }
-    button {
-      padding: 0 28px;
-      font-size: 17px;
-      background: #222222;
-      color: #ffffff;
-      border: none;
-      border-radius: 40px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #333333;
-    }
-    #unity-banner {
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 12px;
-      background: #111111;
-      border-radius: 12px;
-      text-align: center;
-      color: #888888;
-      font-size: 14px;
-      border: 1px solid #222222;
-    }
-    #results {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-    .result {
-      margin-bottom: 32px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #222222;
-    }
-    .result-title a {
-      color: #8ab4f8;
-      font-size: 18px;
-      text-decoration: none;
-      display: block;
-    }
-    .result-title a:hover {
-      text-decoration: underline;
-    }
-    .result-url {
-      color: #34a853;
-      font-size: 14px;
-      margin: 4px 0;
-      word-break: break-all;
-    }
-    .result-snippet {
-      color: #dadce0;
-      font-size: 15px;
-    }
-    #loading {
-      text-align: center;
-      margin: 80px 0;
-      color: #888888;
-      font-size: 18px;
-    }
-    .sponsor {
-      margin: 60px 16px 40px;
-      padding: 20px;
-      background: #111111;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 14px;
-      color: #bbbbbb;
-      border: 1px solid #222222;
-    }
-    .sponsor a {
-      color: #8ab4f8;
-      text-decoration: none;
-    }
-    .sponsor a:hover {
-      text-decoration: underline;
-    }
-    #footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #666666;
-      font-size: 13px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
+    <title>Asearch – Private & Fast Search</title>
+
+    <!-- Unity Ads SDK -->
+    <script src="https://unityads.unity3d.com/webgl/unityads.js"></script>
+
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --text: #202124;
+            --gray: #5f6368;
+            --bg: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-bottom: 120px; /* space for sponsor banner */
+        }
+
+        .logo {
+            font-size: 5.5rem;
+            font-weight: 900;
+            letter-spacing: -5px;
+            color: #000000;
+            margin: 60px 0 80px;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 620px;
+            padding: 0 24px;
+        }
+
+        .search-bar {
+            background: white;
+            border-radius: 999px;
+            padding: 18px 28px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+            font-size: 1.25rem;
+            border: 1px solid #dadce0;
+        }
+
+        .search-bar input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: inherit;
+            color: var(--text);
+        }
+
+        .sponsor-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #f8f9fa;
+            padding: 16px;
+            text-align: center;
+            border-top: 1px solid #dadce0;
+            font-size: 1rem;
+            z-index: 10;
+        }
+
+        .sponsor-banner a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="header">
+<div class="search-container">
     <div class="logo">Asearch</div>
-  </div>
 
-  <div class="search-container">
-    <form class="search-form" id="searchForm">
-      <input type="text" id="query" placeholder="Search..." autocomplete="off" autofocus>
-      <button type="submit">Search</button>
-    </form>
-  </div>
+    <div class="search-bar">
+        <input type="text" id="query" placeholder="Search or type web address" autocomplete="off">
+    </div>
+</div>
 
-  <!-- Unity Ads Banner Placeholder -->
-  <div id="unity-banner">
-    Unity Ads Banner / MREC – Insert your Unity Ads script or placement ID here
-  </div>
+<div class="sponsor-banner">
+    <strong>Sponsored by UK Shoes Empire</strong> • Quality shoes at affordable prices • 
+    Call/WhatsApp: <a href="tel:+2347025643110">+234 702 564 3110</a> • 
+    <a href="https://wa.me/2347025643110" target="_blank">Chat now</a>
+</div>
 
-  <div id="results"></div>
+<script>
+// Unity Ads – your real details
+const unityGameId = '6049700';
+const interstitialPlacement = 'Interstitial_Android';
 
-  <div id="loading" style="display:none;">Searching...</div>
-
-  <div class="sponsor">
-    <strong>Sponsored by UK Shoes Empire</strong><br>
-    Quality shoes at affordable prices • Call/WhatsApp: 
-    <a href="tel:+2347025643110">+234 702 564 3110</a><br>
-    <a href="https://wa.me/2347025643110" target="_blank">Chat now on WhatsApp</a>
-  </div>
-
-  <div id="footer">
-    © 2026 Asearch – 100% private, no tracking
-  </div>
-
-  <script>
-    const form = document.getElementById('searchForm');
-    const queryInput = document.getElementById('query');
-    const resultsDiv = document.getElementById('results');
-    const loading = document.getElementById('loading');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const q = queryInput.value.trim();
-      if (!q) return;
-
-      queryInput.value = '';
-      loading.style.display = 'block';
-      resultsDiv.innerHTML = '';
-
-      // Faster proxy + DuckDuckGo HTML search
-      const ddUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(q)}`;
-      const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(ddUrl)}`;
-
-      try {
-        const res = await fetch(proxyUrl);
-        if (!res.ok) throw new Error('Network error');
-
-        const html = await res.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-
-        const items = doc.querySelectorAll('.result');
-        if (items.length === 0) {
-          resultsDiv.innerHTML = '<p style="text-align:center; color:#888; margin:80px 0;">No results found.</p>';
-        } else {
-          let content = '';
-          items.forEach(item => {
-            const titleEl = item.querySelector('.result__a');
-            const urlEl = item.querySelector('.result__url');
-            const snippetEl = item.querySelector('.result__snippet');
-
-            if (!titleEl) return;
-
-            const title = titleEl.textContent.trim();
-            const href = titleEl.href;
-            const url = urlEl ? urlEl.textContent.trim() : new URL(href).hostname;
-            const snippet = snippetEl ? snippetEl.textContent.trim() : '';
-
-            content += `
-              <div class="result">
-                <div class="result-title"><a href="\( {href}" target="_blank"> \){title}</a></div>
-                <div class="result-url">${url}</div>
-                <div class="result-snippet">${snippet}</div>
-              </div>
-            `;
-          });
-          resultsDiv.innerHTML = content;
-        }
-
-        // Optional Unity interstitial after search
-        if (window.UnityAds && typeof window.UnityAds.show === 'function') {
-          window.UnityAds.show('interstitial');
-        } else if (window.Android && window.Android.showUnityInterstitial) {
-          window.Android.showUnityInterstitial();
-        }
-
-      } catch (err) {
-        console.error('Search failed:', err);
-        resultsDiv.innerHTML = '<p style="color:#ff6b6b; text-align:center; margin:80px 0;">Could not load results. Check internet.</p>';
-      } finally {
-        loading.style.display = 'none';
-      }
+// Initialize Unity Ads and show interstitial immediately on load
+if (typeof unityads !== 'undefined') {
+    unityads.init(unityGameId, true, function() {  // true = test mode (change to false for real ads)
+        console.log('Unity Ads initialized');
+        unityads.show(interstitialPlacement);
     });
-  </script>
+} else {
+    console.log('Unity Ads SDK not loaded');
+}
+
+// Search – loads Google in the same window (inside app/webview)
+document.getElementById('query').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        const q = this.value.trim();
+        if (q) {
+            window.location.href = `https://www.google.com/search?q=${encodeURIComponent(q)}`;
+        }
+    }
+});
+
+</script>
 </body>
 </html>
